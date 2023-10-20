@@ -25,22 +25,66 @@ export class ProductService {
     return await this.productRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    const findProduct = await this.productRepository.findOne({ where: { id } });
+    if (!findProduct) {
+      throw new HttpException('No product found!', HttpStatus.NOT_FOUND);
+    }
+    return findProduct;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: string, updateProductDto: UpdateProductDto) {
+    const {
+      title,
+      description,
+      imgUrl1,
+      price,
+      quantity,
+      size,
+      color,
+      shippings,
+      sex,
+      brands,
+      category,
+    } = updateProductDto;
+
+    const findProduct = await this.productRepository.findOne({ where: { id } });
+    if (!findProduct) {
+      throw new HttpException('No product found!', HttpStatus.NOT_FOUND);
+    }
+
+    let updateProduct: any = {};
+
+    title && (updateProduct.title = title);
+    description && (updateProduct.description = description);
+    imgUrl1 && (updateProduct.imgUrl1 = imgUrl1);
+    price && (updateProduct.price = price);
+    quantity && (updateProduct.quantity = quantity);
+    size && (updateProduct.size = size);
+    color && (updateProduct.color = color);
+    shippings && (updateProduct.shippings = shippings);
+    sex && (updateProduct.sex = sex);
+    brands && (updateProduct.brands = brands);
+    category && (updateProduct.category = category);
+
+    await this.productRepository.update(id, updateProduct);
+
+    const findProductAgain = await this.productRepository.findOne({
+      where: { id },
+    });
+
+    return findProductAgain;
   }
 
   async remove(id: string) {
     const findProduct = await this.productRepository.findOne({ where: { id } });
 
     if (!findProduct) {
-      throw new HttpException("No product found!", HttpStatus.NOT_FOUND)
+      throw new HttpException('No product found!', HttpStatus.NOT_FOUND);
     }
 
-    await this.productRepository.remove(findProduct)
+    await this.productRepository.remove(findProduct);
 
+    return id;
   }
 }
