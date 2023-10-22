@@ -17,7 +17,7 @@ export class ProductEntity {
   @Column('int')
   price: number;
 
-  @Column("int")
+  @Column('int')
   quantity: number;
 
   @Column('text')
@@ -38,4 +38,6 @@ export class ProductEntity {
   @Column('text')
   category: string;
 
+  @Column('text')
+  subcategory: string;
 }

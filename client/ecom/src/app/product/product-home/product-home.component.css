@@ -5,11 +5,15 @@
 }
 
 .header {
-  margin: 4rem 0 0 2.9rem;
+  margin: 4rem 0 4rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .collection-header {
-  font-weight: 300;
+  font-weight: 600;
+  font-size: 2rem;
 }
 
 .btn-container {
@@ -57,3 +61,8 @@
   justify-content: center;
   margin-top: 2rem;
 }
+
+.land-img {
+  width: 100%;
+}
+

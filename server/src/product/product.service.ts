@@ -46,6 +46,7 @@ export class ProductService {
       sex,
       brands,
       category,
+      subcategory,
     } = updateProductDto;
 
     const findProduct = await this.productRepository.findOne({ where: { id } });
@@ -53,7 +54,7 @@ export class ProductService {
       throw new HttpException('No product found!', HttpStatus.NOT_FOUND);
     }
 
-    let updateProduct: any = {};
+    const updateProduct: any = {};
 
     title && (updateProduct.title = title);
     description && (updateProduct.description = description);
@@ -66,6 +67,7 @@ export class ProductService {
     sex && (updateProduct.sex = sex);
     brands && (updateProduct.brands = brands);
     category && (updateProduct.category = category);
+    subcategory && (updateProduct.subcategory = subcategory);
 
     await this.productRepository.update(id, updateProduct);
 
